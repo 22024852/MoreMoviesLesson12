@@ -13,6 +13,12 @@
         android:layout_height="wrap_content"
         android:text="SHOW ALL PG13 MOVIES" />
 
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/spinnerItems2" />
+
     <ListView
         android:id="@+id/listV"
         android:layout_width="match_parent"

@@ -1,7 +1,9 @@
 package sg.edu.rp.c346.id22024852.l11_moviesapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -95,22 +97,47 @@ public class MainActivity3 extends AppCompatActivity {
         });
 
         delete.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                DBHelper db = new DBHelper(MainActivity3.this);
-                db.deleteMovie(song.getId());
-                db.close();
-                Intent i = new Intent(MainActivity3.this, MainActivity2.class);
-                startActivity(i);
+                AlertDialog.Builder myBuilder = new AlertDialog.Builder(MainActivity3.this);
+                myBuilder.setTitle("Danger");
+                myBuilder.setMessage("Are you sure you want to delete the movie " + song.getTitle());
+                myBuilder.setCancelable(false);
+                myBuilder.setPositiveButton("Cancel", null);
+                myBuilder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DBHelper db = new DBHelper(MainActivity3.this);
+                        db.deleteMovie(song.getId());
+                        db.close();
+                        Intent i = new Intent(MainActivity3.this, MainActivity2.class);
+                        startActivity(i);
+                    }
+
+                });
+                AlertDialog myDialog = myBuilder.create();
+                myDialog.show();
             }
         });
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity3.this, MainActivity2.class);
-                startActivity(i);
+                AlertDialog.Builder myBuilder = new AlertDialog.Builder(MainActivity3.this);
+                myBuilder.setTitle("Danger");
+                myBuilder.setMessage("Are you sure you want to discard the changes");
+                myBuilder.setCancelable(false);
+                myBuilder.setPositiveButton("Do Not Discard", null);
+                myBuilder.setNegativeButton("Discard", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent i = new Intent(MainActivity3.this, MainActivity2.class);
+                        startActivity(i);
+                    }
+                });
+
+                AlertDialog myDialog = myBuilder.create();
+                myDialog.show();
             }
         });
 
